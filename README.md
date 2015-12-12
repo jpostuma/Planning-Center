@@ -13,7 +13,7 @@ This PCO People report is customizeable and easy to use. It provides a simple li
 -- After the page is loaded, all liquid markup is replaced with content. This means that all the information about each person is saved to that specific HTML file and that the report can be edited locally. This is useful for printing different variations of the same list.
 
 #### HOW TO USE:
-  Go to the People folder of this repository and copy the source of the Custom-Reports-Plus.html file. Then paste all of it into a new report in Planning Center People. (Note: I created a Userscript for Greasemonkey/Tampermonky in order to easily access reports via one link on the lists page. Try it out [here](https://greasyfork.org/en/scripts/14457-pco-people-changes)
+  Go to the People folder of this repository and copy the source of the Custom-Reports-Plus.html file. Then paste all of it into a new report in Planning Center People. (Note: I created a Userscript for Greasemonkey/Tampermonky in order to easily access reports via one link on the lists page. Try it out [here](https://greasyfork.org/en/scripts/14457-pco-people-changes)). To use, select a list and click print. Choose the Custom Reports Plus report you added and change the output to HTML(!). PDF will not work. Then edit away. Print or Save to your hearts desire!
 
 Please fill free to pull this and poke at it yourself. Or if you don't feel like editing code, check back here for when I release additions and updates! New details like age and birthday are to come.
 
