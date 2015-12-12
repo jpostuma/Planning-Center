@@ -16,7 +16,9 @@
     <div id="selection">
         <input type="checkbox" id="checkEmail">Email</input>
         <input type="checkbox" id="checkAddr">Address</input>
-        <input type="checkbox" id="checkPhone">Phone</input>
+        <input type="checkbox" id="checkPhone">Phone</input><br/>
+				<input type="checkbox" id="checkAge">Age</input>
+				<input type="checkbox" id="checkBD">Birthday</input>
     </div>
 
     <!-- This div contains all the content of the page (which is only a single table)
@@ -29,9 +31,7 @@
         or remove the tag altogether. Removing this image will not ruin the report. If you want to place
         your logo here, you need to host your logo online somewhere. Use a free image host like flickr or
         some alternative. -->
-        <!--
-        <img id="logo" src="YOUR LOGO SOURCE HERE" />
-        -->
+        <img id="logo" src="http://s2.postimg.org/rj6xmmys9/O_Reports.png" />
         <br/><br/><br/>
         <!-- This p tag contains the report's subheading. It provides the 'Printed On' date and the 'List Last Upwdated' date. The beginning of Liquid Markup -->
         <p>
@@ -49,6 +49,8 @@
                     <th class="listEmail">Email</th>
                     <th class="listAddr">Address</th>
                     <th class="listPhone">Phone</th>
+                  	<th class="listAge">Age</th>
+										<th class="listBD">Birthday</th>
                 </tr>
             </thead>
 
@@ -68,12 +70,18 @@
                         {% if person.emails != empty %} {% for email in person.emails %} {{ email.address }} {% endfor %} {% endif %}
                     </td>
                     <td class="listAddr">
-                        {% if person.addresses != empty %} {% for address in person.addresses %} {% if address.city == 'YOUR CITY NAME HERE' %} {{ address.street }} {% else %} {{ address.postal_address }} {% endif%} {% endfor%} {% endif %}
+                        {% if person.addresses != empty %} {% for address in person.addresses %} {% if address.city == 'Amarillo' %} {{ address.street }} {% else %} {{ address.postal_address }} {% endif%} {% endfor%} {% endif %}
                     </td>
                     <td class="listPhone">
                         {% if person.phone_numbers != empty %} {% for phone_number in person.phone_numbers %} {% if phone_number.location != 'Pager' %} {% if phone_number.location == "Home" %}<b>H:</b> {{ phone_number.number }} {% elsif phone_number.location == "Mobile" %}<b>M:</b> {{ phone_number.number }} {% endif %} {% endif %} {% endfor%} {% endif %}
                     </td>
-                </tr>
+                  	<td class="listAge">
+                      	{{ person.age }}
+                  	</td>
+										<td class="listBD">
+                      	{{ person.birthdate | date:"%D"}}
+                  	</td>
+              </tr>
                 {% endfor %}
             </tbody>
         </table>
@@ -94,7 +102,7 @@
         are removed from the document. If the user unchecks all the boxes, a worning is presented
         and the page reloads.
       */
-      function setPrefs(email, addr, phone) {
+      function setPrefs(email, addr, phone, age, bd) {
           $('div#selection').css({
               "display": "none"
           });
@@ -116,6 +124,18 @@
                   $(this).remove();
               });
           }
+        	if (age == false) {
+        	      $('#reportList thead tr .listAge').remove();
+        	      $('#reportList tbody tr .listAge').each(function() {
+        	          $(this).remove();
+        	      });
+        	  }
+        	if (bd == false) {
+        	      $('#reportList thead tr .listBD').remove();
+        	      $('#reportList tbody tr .listBD').each(function() {
+        	          $(this).remove();
+        	      });
+        	  }
       }
 
       /*
@@ -129,6 +149,8 @@
           document.getElementById("checkEmail").checked = true;
           document.getElementById("checkAddr").checked = true;
           document.getElementById("checkPhone").checked = true;
+          document.getElementById("checkAge").checked = true;
+          document.getElementById("checkBD").checked = true;
           $('#selection').dialog({
               title: "Printing Preferences",
               position: {
@@ -141,8 +163,10 @@
                   click: function() {
                       var email = document.getElementById("checkEmail").checked,
                           addr = document.getElementById("checkAddr").checked,
-                          phone = document.getElementById("checkPhone").checked;
-                          setPrefs(email, addr, phone);
+                          phone = document.getElementById("checkPhone").checked,
+                     			age = document.getElementById("checkAge").checked,
+                          bd = document.getElementById("checkBD").checked;
+                          setPrefs(email, addr, phone, age, bd);
                           $(this).dialog('close');
                   }
               }],
