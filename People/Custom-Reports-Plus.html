@@ -29,7 +29,9 @@
         or remove the tag altogether. Removing this image will not ruin the report. If you want to place
         your logo here, you need to host your logo online somewhere. Use a free image host like flickr or
         some alternative. -->
-        <img id="logo" src="http://s2.postimg.org/rj6xmmys9/O_Reports.png" />
+        <!--
+        <img id="logo" src="YOUR LOGO SOURCE HERE" />
+        -->
         <br/><br/><br/>
         <!-- This p tag contains the report's subheading. It provides the 'Printed On' date and the 'List Last Upwdated' date. The beginning of Liquid Markup -->
         <p>
@@ -66,7 +68,7 @@
                         {% if person.emails != empty %} {% for email in person.emails %} {{ email.address }} {% endfor %} {% endif %}
                     </td>
                     <td class="listAddr">
-                        {% if person.addresses != empty %} {% for address in person.addresses %} {% if address.city == 'Amarillo' %} {{ address.street }} {% else %} {{ address.postal_address }} {% endif%} {% endfor%} {% endif %}
+                        {% if person.addresses != empty %} {% for address in person.addresses %} {% if address.city == 'YOUR CITY NAME HERE' %} {{ address.street }} {% else %} {{ address.postal_address }} {% endif%} {% endfor%} {% endif %}
                     </td>
                     <td class="listPhone">
                         {% if person.phone_numbers != empty %} {% for phone_number in person.phone_numbers %} {% if phone_number.location != 'Pager' %} {% if phone_number.location == "Home" %}<b>H:</b> {{ phone_number.number }} {% elsif phone_number.location == "Mobile" %}<b>M:</b> {{ phone_number.number }} {% endif %} {% endif %} {% endfor%} {% endif %}
