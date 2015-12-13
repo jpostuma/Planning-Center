@@ -5,7 +5,7 @@
     {{ helpers.bootstrap_3 }}
 		<link rel="stylesheet" href="https://bootswatch.com/paper/bootstrap.min.css" />
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-    <style> @page{margin: 0.5in; size: US-Letter, landscape;}@media print{ div#selection{display:none;} }body{font-size:12px;}img#logo{float:right;width:auto;height:1in;}tr{font-size:14px;}h2{float:left; font-size:2.3em;text-transform:uppercase;font-weight:bold;display:block; text-align:center;}h3{font-size:1.1em;float:left; display:block; margin:0.25in auto;}.blurred{filter: blur(5px); -webkit-filter: blur(5px); -moz-filter: blur(5px); -o-filter: blur(5px); -ms-filter: blur(5px);} </style>
+    <style> @page{margin: 0.5in; size: US-Letter, landscape;}@media print{ div#selection{display:none;} a{text-decoration:none;color:black;} }body{font-size:12px;}img#logo{float:right;width:auto;height:1in;}tr{font-size:14px;}h2{float:left; font-size:2.3em;text-transform:uppercase;font-weight:bold;display:block; text-align:center;}h3{font-size:1.1em;float:left; display:block; margin:0.25in auto;}.blurred{filter: blur(5px); -webkit-filter: blur(5px); -moz-filter: blur(5px); -o-filter: blur(5px); -ms-filter: blur(5px);} </style>
 
   </head>
   <body>
@@ -65,15 +65,36 @@
             <tbody>
                 {% for person in people %}
                 <tr>
-                    <td class="listName">{{ person.name }}</td>
+                  	<td class="listName"> <a href="https://people.planningcenteronline.com/people/{{ person.id }}" target="_blank">{{ person.name }}</a></td>
                     <td class="listEmail">
-                        {% if person.emails != empty %} {% for email in person.emails %} {{ email.address }} {% endfor %} {% endif %}
+                      {% if person.emails != empty %}
+                      	{% for email in person.emails %}
+                      		<a href="mailto:{{ email.address }}" target="_top">{{ email.address }}</a>
+                      	{% endfor %}
+                      {% endif %}
                     </td>
                     <td class="listAddr">
-                        {% if person.addresses != empty %} {% for address in person.addresses %} {% if address.city == 'Amarillo' %} {{ address.street }} {% else %} {{ address.postal_address }} {% endif%} {% endfor%} {% endif %}
+                      {% if person.addresses != empty %}
+                      	{% for address in person.addresses %}
+                      		{% if address.city == 'Amarillo' %}
+                      			<a href="http://maps.google.com/?q={{ address.postal_address | url_escape | strip_html }}"  target="_blank"> {{ address.street }} </a>
+                      		{% else %}
+                      			<a href="http://maps.google.com/?q={{ address.postal_address | url_escape | strip_html }}" target="_blank">  {{ address.postal_address }} </a>
+                      		{% endif%}
+                      	{% endfor%}
+                      {% endif %}
                     </td>
                     <td class="listPhone">
-                        {% if person.phone_numbers != empty %} {% for phone_number in person.phone_numbers %} {% if phone_number.location != 'Pager' %} {% if phone_number.location == "Home" %}<b>H:</b> {{ phone_number.number }} {% elsif phone_number.location == "Mobile" %}<b>M:</b> {{ phone_number.number }} {% endif %} {% endif %} {% endfor%} {% endif %}
+                      {% if person.phone_numbers != empty %}
+                      	{% for phone_number in person.phone_numbers %}
+                      		{% if phone_number.location != 'Pager' %}
+                      			<a href="tel:{{ phone_number.number }}">
+                              {% if phone_number.location == "Home" %}<b>H:</b> {{ phone_number.number }}
+                              {% elsif phone_number.location == "Mobile" %}<b>M:</b> {{ phone_number.number }}
+                              {% endif %} </a>
+                      		{% endif %}
+                      	{% endfor%}
+                      {% endif %}
                     </td>
                   	<td class="listAge">
                       	{{ person.age }}
