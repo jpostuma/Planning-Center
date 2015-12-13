@@ -1,0 +1,45 @@
+@page {
+    margin: 0.5in;
+    size: US-Letter, landscape;
+}
+@media print {
+    div#selection {
+        display: none;
+    }
+    a {
+        text-decoration: none;
+        color: black;
+    }
+}
+body {
+    font-size: 12px;
+}
+img#logo {
+    float: right;
+    width: auto;
+    height: 1in;
+}
+tr {
+    font-size: 14px;
+}
+h2 {
+    float: left;
+    font-size: 2.3em;
+    text-transform: uppercase;
+    font-weight: bold;
+    display: block;
+    text-align: center;
+}
+h3 {
+    font-size: 1.1em;
+    float: left;
+    display: block;
+    margin: 0.25in auto;
+}
+.blurred {
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+}
