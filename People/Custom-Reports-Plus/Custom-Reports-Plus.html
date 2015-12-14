@@ -77,7 +77,7 @@
                       {% if person.addresses != empty %}
                       	{% for address in person.addresses %}
                       		{% if address.city == 'Amarillo' %}
-                      			<a href="http://maps.google.com/?q={{ address.postal_address | url_escape | strip_html }}"  target="_blank"> {{ address.street }} </a>
+                      			<a href="http://maps.google.com/?q={{ address.postal_address | url_escape | strip_html }}"  target="_blank"> {{ address.street }} {{ address.zip }}  </a>
                       		{% else %}
                       			<a href="http://maps.google.com/?q={{ address.postal_address | url_escape | strip_html }}" target="_blank">  {{ address.postal_address }} </a>
                       		{% endif%}
