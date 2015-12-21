@@ -1,0 +1,198 @@
+{% assign no_avatar = 'http://ieema.in/wp-content/themes/kleo-child/images/presidents/avatar_blank.jpg'%}
+{% assign sorted_people = people | sort: 'person.child' %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  {{ helpers.bootstrap_3 }}
+
+<style>
+  .pagep {
+    page-break-inside: avoid;
+    prince-pdf-print-scaling: auto;
+    margin-left: 50px;
+  }
+
+  .avatar {
+    width: 100px;
+    margin-left:auto;
+    margin-right:auto;
+    height:200px;
+    width:100%;
+  }
+
+  tr {height:25px;}
+  .household { padding-left: 15px; }
+  .family_member { float: left; padding-right: 15px; }
+  .adults{margin-left:-15px; margin-right:-15px;}
+  .spacer{margin-top:10px;}
+  .adult {
+    display: block;
+    padding: 4px;
+    border: 1px solid #ddd;
+    max-width: 250px;
+    float:left;
+    margin-right: 50px;
+    margin-left: 50px;
+  }
+  .elder {float:bottom;border:1px;}
+    img.family_member_avatar {
+    height: 50px;
+    border-radius: 25px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+  }
+
+  img.primary_contact { border: 2px solid #5cd595; }
+  .family_member_name { text-align: center; padding-top: 3px; }
+  .tab { float: left; padding: 10px; }
+  .tab-title { font-size: 1.3em; background-color: #eee; padding: 5px; border: 1px solid #eee; }
+  .answer { padding: 5px; border: 1px solid #eee; border-top: 0px; }
+</style>
+</head>
+
+<body>
+
+  {% for person in people %}
+  {% for household in person.households %}
+    {% if household.primary_contact.name == person.name %}
+    <div class="container">
+    <div class ="pagep">
+    <div class="spacer"></div>
+      <h1>{{ household.name | remove:' Household'}}</h1>
+        <div class="spacer"></div>
+        <div class="{{col_class}}">
+          <h3>Contact Information</h3>
+        <div>
+        
+          {% if person.phone_numbers != empty %}
+            {% for phone_number in person.phone_numbers %}
+              {{ phone_number.number }} ({{ phone_number.location }})<br>
+            {% endfor%}
+          {% endif %}
+  
+          {% if person.addresses != empty %}
+            {% for address in person.addresses %}
+              <address>
+                {{ address.postal_address }} ({{ address.location }})
+              </address>
+            {% endfor%}
+          {% endif %}
+        </div>
+      </div>
+
+      <div class ="spacer"></div>
+        <div class="row">
+          {% for household_person in household.people %}
+            {% if household_person.child == false %}
+              <div class = "adult">
+                  <img class="media-object thumbnail avatar"
+                      src="{% if household_person.photo_url %}{{household_person.photo_url}}{% else %}{{no_avatar}}{% endif %}"
+                      alt="{{household_person.name}} avatar">
+              <div>
+
+              <div class="tab-title">{{ household_person.name }}</div>
+                <div class="questions">
+                  <div class="answer">
+                    <strong>Birthday:</strong>
+                    <span> {{ household_person.birthdate }}</span>
+                  </div>
+                </div>
+  
+                <div class="questions">
+                  <div class="answer">
+                    <strong>Anniversary:</strong>
+                    <span> {{ household_person.anniversary }} </span>
+                  </div>
+                </div>
+
+                <div class="questions">
+                  <div class="answer">
+                    <strong>Membership:</strong>
+                    <span> {{ household_person.custom_tabs.membership.membership_class }}</span>
+                  </div>
+                </div>
+
+                <div class="questions">
+                  <div class="answer">
+                    <strong>Email:</strong>
+                    <span> {{household_person.emails}}</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+        <div class="spacer">
+        </div>
+        <div class="row">
+          {% for household_person in household.people %}
+            {% if household_person.child == true %}
+              <div class="family_member">
+                <div class="thumbnail">
+                  <img class="family_member_avatar {% if household_person.id == household.primary_contact.id %}primary_contact{% endif %}" src="{% if household_person.photo_url %}{{household_person.photo_url}}{% else %}{{no_avatar}}{% endif %}" alt="avatar">
+                  <div class="family_member_name">
+                    {{household_person.first_name}}
+                    {{ household_person.last_name }} 
+                  </div><br>
+                  <div class="children_info">
+                    Birthday: {{ household_person.birthdate}}<br>
+                    Membership: {{ household_person.custom_tabs.membership.membership_class }}<br>
+                    Baptism: {{ household_person.custom_tabs.membership.baptism }}<br>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %} 
+        <br><br><br><br><br>
+        </div>
+
+        <div class="spacer">
+        </div>
+        
+        <div class="elders">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Date of Visit</th>
+                <th>Elder Visited</th>
+                <th>Notes (Good Visit or discuss with elder)</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  {% endfor %}
+  {% endfor %}
+</body>
+</html>
